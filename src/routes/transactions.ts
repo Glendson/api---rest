@@ -12,7 +12,7 @@ export async function transactionsRoutes(app: FastifyInstance) {
       type: z.enum(["credit", "debit"]),
     });
 
-    const { type, title, amount } = createTransactionBodySchema.parse(
+    const { title, amount, type } = createTransactionBodySchema.parse(
       request.body
     );
 
@@ -21,9 +21,9 @@ export async function transactionsRoutes(app: FastifyInstance) {
     if (!sessionId) {
       sessionId = randomUUID();
 
-      reply.cookie("sessionId", sessionId, {
+      reply.setCookie("sessionId", sessionId, {
         path: "/",
-        maxAge: 60 * 60 * 24 * 7, // 7 days
+        maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days
       });
     }
 

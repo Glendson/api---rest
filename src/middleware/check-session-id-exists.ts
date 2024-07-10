@@ -4,7 +4,7 @@ export async function checkSessionIdExists(
   request: FastifyRequest,
   reply: FastifyReply
 ) {
-  const sesssionId = request.cookies.sesssionId;
+  const { sessionId } = request.cookies;
 
-  if (!sesssionId) return reply.status(401).send({ error: "Invalid session" });
+  if (!sessionId) return reply.status(401).send({ error: "Invalid session" });
 }

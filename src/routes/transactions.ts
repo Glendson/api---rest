@@ -43,10 +43,10 @@ export async function transactionsRoutes(app: FastifyInstance) {
       preHandler: [checkSessionIdExists],
     },
     async (request, reply) => {
-      const { sesssionId } = request.cookies;
+      const { sessionId } = request.cookies;
 
       const transactions = await knex("transactions")
-        .where("session_id", sesssionId)
+        .where("session_id", sessionId)
         .select();
 
       return { transactions };
@@ -65,11 +65,11 @@ export async function transactionsRoutes(app: FastifyInstance) {
 
       const { id } = getTransactionsParamsSchema.parse(request.params);
 
-      const { sesssionId } = request.cookies;
+      const { sessionId } = request.cookies;
 
       const transaction = await knex("transactions")
         .where("id", id)
-        .andWhere("session_id", sesssionId)
+        .andWhere("session_id", sessionId)
         .first();
 
       return { transaction };
@@ -82,10 +82,10 @@ export async function transactionsRoutes(app: FastifyInstance) {
       preHandler: [checkSessionIdExists],
     },
     async (request) => {
-      const { sesssionId } = request.cookies;
+      const { sessionId } = request.cookies;
 
       const summary = await knex("transactions")
-        .where("session_id", sesssionId)
+        .where("session_id", sessionId)
         .sum("amount", { as: "amount" })
         .first();
 
